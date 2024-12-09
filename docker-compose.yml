@@ -48,3 +48,15 @@ services:
       - zookeeper
       - kafka
       - mysql
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - kafka
+    ports:
+      - "11080:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTER_0_NAME=local-kafka
+      - KAFKA_CLUSTER_0_BOOTSTRAPSERVERS=local-kafka:29092
