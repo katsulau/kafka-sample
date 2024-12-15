@@ -6,6 +6,9 @@ services:
       - "2181:2181"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - kafka_network
+
   kafka:
     image: "bitnami/kafka:latest"
     ports:
@@ -16,11 +19,13 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://local-kafka:9092,PLAINTEXT_HOST://127.0.0.1:29092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://127.0.0.1:29092
     container_name: local-kafka
     depends_on:
       - zookeeper
+    networks:
+      - kafka_network
 
   mysql:
     image: mysql:8.0
@@ -32,7 +37,9 @@ services:
       - ./my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/init.d:/docker-entrypoint-initdb.d
     ports:
-      - 3306:3306
+      - "3306:3306"
+    networks:
+      - kafka_network
 
   debezium:
     image: "debezium/connect:2.0"
@@ -48,6 +55,8 @@ services:
       - zookeeper
       - kafka
       - mysql
+    networks:
+      - kafka_network
 
   kafka-ui:
     container_name: kafka-ui
@@ -58,5 +67,11 @@ services:
       - "11080:8080"
     restart: always
     environment:
-      - KAFKA_CLUSTER_0_NAME=local-kafka
-      - KAFKA_CLUSTER_0_BOOTSTRAPSERVERS=local-kafka:29092
+      - KAFKA_CLUSTERS_0_NAME=local-kafka
+      - KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS=kafka:9092
+    networks:
+      - kafka_network
+
+networks:
+  kafka_network:
+    driver: bridge
