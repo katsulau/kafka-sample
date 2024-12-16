@@ -31,15 +31,15 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-class Sample07KafkaListener {
+public class Sample07KafkaListener {
 
 	@KafkaListener(topics = "debezium_cdc_topic.test.user", groupId = "sample07-1")
-	fun listenWithGroup1(message: String) {
-		println("Received debezium_cdc_topic message at group sample07-1: " + message);
+	public void listenWithGroup1(String message) {
+		System.out.println("Received debezium_cdc_topic message at group sample07-1: " + message);
 	}
 
 	@KafkaListener(topics = "schema-changes.test", groupId = "sample07-2")
-	fun listenWithGroup2(message: String) {
-		println("Received schema-changes.test message at group sample07-2: " + message);
+	public void listenWithGroup2(String message) {
+		System.out.println("Received schema-changes.test message at group sample07-2: " + message);
 	}
 }

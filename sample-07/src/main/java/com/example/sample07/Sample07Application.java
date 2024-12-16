@@ -16,30 +16,23 @@
 
 package com.example.sample07;
 
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * New consumer rebalance protocol sample which purpose is only to demonstrate the application
  * of the New Consumer Rebalance Protocol in Spring Kafka.
- * Each consumer will subscribe test-topic with different group id.
- * Then, new consumer rebalance protocol will be completed successfully.
  *
  * @author Sanghyeok An.
  *
  * @since 3.2.0
  */
 
-@Component
-class Sample07KafkaListener {
+@SpringBootApplication
+public class Sample07Application {
 
-	@KafkaListener(topics = "debezium_cdc_topic.test.user", groupId = "sample07-1")
-	fun listenWithGroup1(message: String) {
-		println("Received debezium_cdc_topic message at group sample07-1: " + message);
+	public static void main(String[] args) {
+		SpringApplication.run(Sample07Application.class, args);
 	}
 
-	@KafkaListener(topics = "schema-changes.test", groupId = "sample07-2")
-	fun listenWithGroup2(message: String) {
-		println("Received schema-changes.test message at group sample07-2: " + message);
-	}
 }
