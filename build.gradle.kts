@@ -25,6 +25,10 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// debezium https://docs.spring.io/spring-integration/reference/debezium.html
+	implementation("org.springframework.integration:spring-integration-debezium:6.4.1")
+	implementation("io.debezium:debezium-connector-mysql:3.0.5.Final")
 }
 
 kotlin {
