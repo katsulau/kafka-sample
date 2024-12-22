@@ -21,7 +21,7 @@ class DebeziumHandler(
     debeziumConfig: Configuration,
 ) {
     private val executor = Executors.newSingleThreadExecutor()
-    private val engine: DebeziumEngine<RecordChangeEvent<SourceRecord>> by lazy {
+    private val engine by lazy {
         DebeziumEngine.create(ChangeEventFormat.of(Connect::class.java))
             .using(debeziumConfig.asProperties())
             .notifying(this::handleChangeEvent)
