@@ -12,12 +12,6 @@ data class PayloadModel(
     val after: JsonElement? = null,
     val source: Source? = null,
     val transaction: Transaction? = null,
-    /**
-     * c= 作成する
-     * u= 更新
-     * d= 削除
-     * r= 読み取り (スナップショットにのみ適用)
-     */
     @JsonNames("op")
     val operation: Operation,
     val ts_ms: Long? = null,
@@ -27,16 +21,16 @@ data class PayloadModel(
 
 @Serializable
 data class Source(
+    val db: String,
+    val table: String,
     val version: String? = null,
     val connector: String? = null,
     val name: String? = null,
     val ts_ms: Long? = null,
     val snapshot: String? = null,
-    val db: String? = null,
     val sequence: String? = null,
     val ts_us: Long? = null,
     val ts_ns: Long? = null,
-    val table: String,
     val server_id: Long? = null,
     val gtid: String? = null,
     val file: String? = null,

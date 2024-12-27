@@ -11,6 +11,7 @@ enum class Operation {
     UPDATE,
     @SerialName("d")
     DELETE,
+    // スナップショット時のみ
     @SerialName("r")
     READ
 }
