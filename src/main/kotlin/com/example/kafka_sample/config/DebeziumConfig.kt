@@ -14,6 +14,7 @@ class DebeziumConfig {
         return Configuration.create()
             .with("name", "engine")
             .with("connector.class", "io.debezium.connector.mysql.MySqlConnector")
+            // 良さそうな保存場所を考える APIで動的に任意の地点に切り替えれないか
             .with("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore")
             .with("offset.storage.file.filename", "offset.dat")
             .with("offset.flush.interval.ms", "60000")
@@ -22,11 +23,13 @@ class DebeziumConfig {
             .with("database.dbname", "test")
             .with("database.user", "root")
             .with("database.password", "password")
-            .with("database.server.id", "8080")
+            // 一意であればどんな値でも良さそう
+            .with("database.server.id", "1")
             .with("topic.prefix", "debezium_app_cdc_topic")
             .with("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory")
             .with("schema.history.internal.file.filename", "schemahistory.dat")
-            .with("include.schema.change", "false")
+             // このプロパティは認識されていないことを確認済
+//            .with("include.schema.change", "false")
             .with("table.include.list", "test.profile")
 //            .with("column.include.list", "storeDB.customer.*,storeDB.product.(id|price)")
             .build()
