@@ -1,16 +1,14 @@
 package com.example.kafka_sample.config
 
-import com.example.kafka_sample.handler.DebeziumHandler
 import io.debezium.config.Configuration
-import io.debezium.engine.DebeziumEngine
-import io.debezium.engine.format.ChangeEventFormat
-import java.io.File
 import org.springframework.context.annotation.Bean
 
 
 @org.springframework.context.annotation.Configuration
 class DebeziumConfig {
 
+    // https://debezium.io/documentation/reference/stable/connectors/mysql.html#mysql-deploying-a-connector
+    // https://debezium.io/documentation/reference/stable/development/engine.html#_in_the_code
     @Bean
     fun debeziumFactory(): Configuration {
         return Configuration.create()
