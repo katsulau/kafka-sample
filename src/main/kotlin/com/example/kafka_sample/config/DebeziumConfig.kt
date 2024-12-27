@@ -21,6 +21,7 @@ class DebeziumConfig {
             .with("database.hostname", "127.0.0.1")
             .with("database.port", "3306")
             // テスト待ち
+            .with("database.dbname", "test")
 //            .with("database.dbname", "test,USER_MANAGEMENT,product-inventory,OrderManagement")
             .with("database.user", "root")
             .with("database.password", "password")
@@ -30,14 +31,18 @@ class DebeziumConfig {
             .with("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory")
             .with("schema.history.internal.file.filename", "schemahistory.dat")
             // テスト待ち
+            .with("table.whitelist", "test.user")
 //            .with("table.include.list", "test.user, USER_MANAGEMENT.Users, product-inventory.Products-, OrderManagement.OrderItems")
 //            .with("column.include.list", "USER_MANAGEMENT.Users.(01NAME|\$Email)")
             .with("include.schema.changes", "false")
+            // schemaは除外
+            .with("key.converter.schemas.enable", "false")
+            .with("value.converter.schemas.enable", "false")
+            // テスト待ち 変換処理
 //            .with("transforms", "filter")
 //            .with("transforms.filter.type", "io.debezium.transforms.Filter")
 //            .with("transforms.filter.language", "jsr223.groovy")
 //            .with("transforms.filter.condition", "value.op == c")
-//        　　　DDL,DMLの変更が{}で囲まれたJSON形式で送信される
 //            .with("converter.schemas.enable", "false")
             .build()
     }

@@ -1,7 +1,7 @@
 package com.example.kafka_sample.handler
 
 import kotlinx.serialization.encodeToString
-import com.example.kafka_sample.model.ChangeEventModel
+import com.example.kafka_sample.model.value.PayloadModel
 import io.debezium.config.Configuration
 import io.debezium.engine.ChangeEvent
 import io.debezium.engine.DebeziumEngine
@@ -33,7 +33,7 @@ class DebeziumHandler(
 
 
     private fun handleChangeEvent(event: ChangeEvent<String, String>) {
-        // 削除イベントの場合、なぜか2回走り、2回目はvalueがない
+        // 削除イベンxトの場合、なぜか2回走り、2回目はvalueがない
         if (event.key() == null || event.value() == null) return
         
         println("-------------------------------------------------------------------------------------------------------------------------------------------")
@@ -41,7 +41,8 @@ class DebeziumHandler(
             ignoreUnknownKeys = true
             prettyPrint = true
         }
-        val eventModel = format.decodeFromString<ChangeEventModel>(event.value()).payload
+        // schema有無設定によって、構造が変わる
+        val eventModel = format.decodeFromString<PayloadModel>(event.value())
         println(format.encodeToString(eventModel))
         println("-------------------------------------------------------------------------------------------------------------------------------------------")
     }
