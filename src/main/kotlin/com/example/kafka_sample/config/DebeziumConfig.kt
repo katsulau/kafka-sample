@@ -20,7 +20,8 @@ class DebeziumConfig {
             .with("offset.flush.interval.ms", "60000")
             .with("database.hostname", "127.0.0.1")
             .with("database.port", "3306")
-            .with("database.dbname", "test")
+            // テスト待ち
+//            .with("database.dbname", "test,USER_MANAGEMENT,product-inventory,OrderManagement")
             .with("database.user", "root")
             .with("database.password", "password")
             // 一意であればどんな値でも良さそう
@@ -28,7 +29,9 @@ class DebeziumConfig {
             .with("topic.prefix", "debezium_app_cdc_topic")
             .with("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory")
             .with("schema.history.internal.file.filename", "schemahistory.dat")
-            .with("table.include.list", "test.profile")
+            // テスト待ち
+//            .with("table.include.list", "test.user, USER_MANAGEMENT.Users, product-inventory.Products-, OrderManagement.OrderItems")
+//            .with("column.include.list", "USER_MANAGEMENT.Users.(01NAME|\$Email)")
             .with("include.schema.changes", "false")
 //            .with("transforms", "filter")
 //            .with("transforms.filter.type", "io.debezium.transforms.Filter")
@@ -36,7 +39,6 @@ class DebeziumConfig {
 //            .with("transforms.filter.condition", "value.op == c")
 //        　　　DDL,DMLの変更が{}で囲まれたJSON形式で送信される
 //            .with("converter.schemas.enable", "false")
-//            .with("column.include.list", "storeDB.customer.*,storeDB.product.(id|price)")
             .build()
     }
 }
