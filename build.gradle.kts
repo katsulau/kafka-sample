@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.4.1"
 	id("io.spring.dependency-management") version "1.1.7"
+	kotlin("plugin.serialization") version "2.1.0"
 }
 
 group = "com.example"
@@ -19,7 +20,10 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.kafka:spring-kafka")
+	// json parse
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0-RC")
+
+//	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
