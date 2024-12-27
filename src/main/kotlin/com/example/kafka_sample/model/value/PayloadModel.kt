@@ -1,11 +1,15 @@
 package com.example.kafka_sample.model.value
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
+@OptIn(ExperimentalSerializationApi::class)
 data class PayloadModel(
-    val before: String? = null,
-    val after: String? = null,
+    val before: JsonElement? = null,
+    val after: JsonElement? = null,
     val source: Source? = null,
     val transaction: Transaction? = null,
     /**
@@ -14,7 +18,8 @@ data class PayloadModel(
      * d= 削除
      * r= 読み取り (スナップショットにのみ適用)
      */
-    val op: String? = null,
+    @JsonNames("op")
+    val operation: Operation,
     val ts_ms: Long? = null,
     val ts_us: Long? = null,
     val ts_ns: Long? = null
@@ -31,7 +36,7 @@ data class Source(
     val sequence: String? = null,
     val ts_us: Long? = null,
     val ts_ns: Long? = null,
-    val table: String? = null,
+    val table: String,
     val server_id: Long? = null,
     val gtid: String? = null,
     val file: String? = null,
