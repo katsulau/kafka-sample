@@ -33,12 +33,15 @@ class DebeziumHandler(
 
 
     private fun handleChangeEvent(event: ChangeEvent<String, String>) {
+        // 削除イベントの場合、なぜか2回走り、2回目はvalueがない
+        if (event.key() == null || event.value() == null) return
+        
         println("-------------------------------------------------------------------------------------------------------------------------------------------")
         val format = kotlinx.serialization.json.Json {
             ignoreUnknownKeys = true
             prettyPrint = true
         }
-        val eventModel = format.decodeFromString<ChangeEventModel>(event.value())
+        val eventModel = format.decodeFromString<ChangeEventModel>(event.value()).payload
         println(format.encodeToString(eventModel))
         println("-------------------------------------------------------------------------------------------------------------------------------------------")
     }

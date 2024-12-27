@@ -46,6 +46,12 @@ data class Payload(
     val after: ValueData? = null,
     val source: Source? = null,
     val transaction: Transaction? = null,
+    /**
+     * c= 作成する
+     * u= 更新
+     * d= 削除
+     * r= 読み取り (スナップショットにのみ適用)
+     */
     val op: String? = null,
     val ts_ms: Long? = null,
     val ts_us: Long? = null,

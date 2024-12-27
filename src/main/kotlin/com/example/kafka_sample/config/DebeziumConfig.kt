@@ -28,9 +28,14 @@ class DebeziumConfig {
             .with("topic.prefix", "debezium_app_cdc_topic")
             .with("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory")
             .with("schema.history.internal.file.filename", "schemahistory.dat")
-             // このプロパティは認識されていないことを確認済
-//            .with("include.schema.change", "false")
             .with("table.include.list", "test.profile")
+            .with("include.schema.changes", "false")
+//            .with("transforms", "filter")
+//            .with("transforms.filter.type", "io.debezium.transforms.Filter")
+//            .with("transforms.filter.language", "jsr223.groovy")
+//            .with("transforms.filter.condition", "value.op == c")
+//        　　　DDL,DMLの変更が{}で囲まれたJSON形式で送信される
+//            .with("converter.schemas.enable", "false")
 //            .with("column.include.list", "storeDB.customer.*,storeDB.product.(id|price)")
             .build()
     }
